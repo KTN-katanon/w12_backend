@@ -44,9 +44,7 @@ export class OrdersService {
       order.qty += orderItem.qty;
     }
     await this.ordersRepository.save(order);
-    return await this.ordersRepository.find({
-      relations: { orderItems: true, user: true },
-    });
+    return order;
   }
 
   findAll() {

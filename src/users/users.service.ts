@@ -6,6 +6,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { validate } from 'class-validator';
 import { Role } from 'src/roles/entities/role.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -23,6 +24,10 @@ export class UsersService {
     if (errors.length > 0) {
       throw new Error(`Validation failed: ${errors.toString()}`);
     }
+    const saltOrRounds = 10;
+    const password = createUserDto.password;
+    const hash = await bcrypt.hash(password, saltOrRounds);
+    createUserDto.password = hash;
     const newUser = this.usersRepository.create(createUserDto);
     if (createUserDto.roleIds) {
       newUser.roles = await this.rolesRepository.findBy({
@@ -67,6 +72,12 @@ export class UsersService {
       user.roles = await this.rolesRepository.findBy({
         id: In(updateUserDto.roleIds),
       });
+    }
+    const saltOrRounds = 10;
+    if (updateUserDto.password) {
+      const password = updateUserDto.password;
+      const hash = await bcrypt.hash(password, saltOrRounds);
+      updateUserDto.password = hash;
     }
     const updateUser = { ...user, ...updateUserDto };
     return await this.usersRepository.save(updateUser);

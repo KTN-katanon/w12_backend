@@ -44,6 +44,7 @@ export class UsersService {
   async findOne(id: number): Promise<User> {
     const user = await this.usersRepository.findOneOrFail({
       where: { id },
+      select: ['id', 'login', 'password'],
       relations: ['roles'],
     });
     return user;
@@ -52,6 +53,7 @@ export class UsersService {
   async findOneByLogin(login: string): Promise<User> {
     const user = await this.usersRepository.findOneOrFail({
       where: { login },
+      select: ['id', 'login', 'password'],
       relations: ['roles'],
     });
     return user;

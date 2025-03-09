@@ -44,6 +44,14 @@ export class UsersService {
     return user;
   }
 
+  async findOneByLogin(login: string): Promise<User> {
+    const user = await this.usersRepository.findOneOrFail({
+      where: { login },
+      relations: ['roles'],
+    });
+    return user;
+  }
+
   async update(
     id: number,
     updateUserDto: UpdateUserDto & { imageUrl?: string },

@@ -10,6 +10,7 @@ async function bootstrap() {
     .setDescription('The Coffee API description')
     .setVersion('1.0')
     .addTag('coffee')
+    .addBearerAuth()
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);

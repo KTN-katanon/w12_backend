@@ -13,12 +13,18 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
+  ApiOperation,
+} from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { AuthGuard } from 'src/auth/auth.guard';
+@ApiBearerAuth()
 @UseGuards(AuthGuard)
 @Controller('users')
 export class UsersController {

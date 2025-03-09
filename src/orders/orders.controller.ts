@@ -20,8 +20,9 @@ export class OrdersController {
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto, @Request() req) {
-    console.log(req);
-    return this.ordersService.create(createOrderDto);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+    const userId: number = req.user.sub;
+    return this.ordersService.create(createOrderDto, userId);
   }
 
   @Get()

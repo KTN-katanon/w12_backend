@@ -20,9 +20,9 @@ export class OrdersService {
     @InjectRepository(Product)
     private readonly productsRepository: Repository<Product>,
   ) {}
-  async create(createOrderDto: CreateOrderDto) {
+  async create(createOrderDto: CreateOrderDto, userId: number) {
     const user = await this.usersRepository.findOneByOrFail({
-      id: createOrderDto.userId,
+      id: userId,
     });
     const order = new Order();
     order.user = user;

@@ -13,10 +13,6 @@ export class OrderItemDto {
 }
 
 export class CreateOrderDto {
-  @ApiProperty({ description: 'Id ผู้ใช้' })
-  @IsNumber()
-  @Min(1, { message: 'User Id must more than 1.' })
-  userId: number;
   @ApiProperty({ type: [OrderItemDto] })
   @IsArray()
   @ArrayMinSize(1)
